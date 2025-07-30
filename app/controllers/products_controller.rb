@@ -49,22 +49,27 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
-    @product.destroy!
+    @product.destroy
 
     respond_to do |format|
-      format.html { redirect_to products_path, status: :see_other, notice: "Product was successfully destroyed." }
+      format.html { redirect_to products_path, notice: "Product was successfully destroyed." }
       format.json { head :no_content }
+    end
+  rescue => e
+    respond_to do |format|
+      format.html { redirect_to products_path, alert: "Error destroying product: #{e.message}" }
+      format.json { render json: { error: e.message }, status: :unprocessable_entity }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find(params.expect(:id))
+      @product = Product.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.expect(product: [ :name ])
+      params.require(:product).permit(:name)
     end
 end

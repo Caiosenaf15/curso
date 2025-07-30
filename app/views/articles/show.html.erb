@@ -6,4 +6,5 @@
 
 <%= link_to 'Back', root_path %>
 
-<%= link_to 'Destroy', article_path(@article), method: :delete %>
+<%= link_to 'Destroy', article_path(@article), method: :delete, data: { confirm: 'Tem certeza?', turbo: false } %>
+
