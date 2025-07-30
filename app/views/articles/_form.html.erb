@@ -2,20 +2,25 @@
   <div>
     <%= form.label :title %>
     <%= form.text_field :title %>
-    <% article.errors.full_messages_for(:title).each do |message| %>
-      <div><%= message %></div>
+    <% if article.errors.any? %>
+      <% article.errors.full_messages_for(:title).each do |message| %>
+        <div class="error-message"><%= message %></div>
+      <% end %>
     <% end %>
   </div>
 
   <div>
     <%= form.label :body %>
     <%= form.text_area :body %>
-    <% article.errors.full_messages_for(:body).each do |message| %>
-      <div><%= message %></div>
+    <% if article.errors.any? %>
+      <% article.errors.full_messages_for(:body).each do |message| %>
+        <div class="error-message"><%= message %></div>
+      <% end %>
     <% end %>
   </div>
 
   <div>
-    <%= form.submit%>
+    <%= form.submit %>
+    <%= link_to "Back", articles_path, class: "btn-back" %>
   </div>
 <% end %>
